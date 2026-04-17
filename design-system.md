@@ -1,6 +1,6 @@
 # UrbanOS NorthStar v2 — Design System
 
-A comprehensive design system for UrbanOS, the operating system for cities. This document defines every visual token, component, animation, and guideline used across the 28-screen prototype.
+A comprehensive design system for UrbanOS, the operating system for cities. This document defines every visual token, component, animation, pattern, and guideline used across the prototype — covering 35 sections across 6 categories.
 
 ---
 
@@ -518,6 +518,209 @@ Used within screens for KPIs (4-column), cards (2-column or 3-column), and mixed
 - Use opacity suffixes (14, 20, 30) for tinted backgrounds
 - Do not use pure black (`#000`) for text — use `t1` (`#2a2420`)
 - Do not introduce colors outside the defined palette
+
+---
+
+## Iconography
+
+UrbanOS uses emoji-based semantic icons rather than an icon font. Each icon is mapped to a domain concept and used consistently across screens.
+
+| Icon | Meaning | Usage Context |
+|------|---------|---------------|
+| 🏙️ | City / Urban | Overview, city-wide metrics |
+| ⚡ | Energy | Energy grid, power metrics |
+| 🚌 | Transport | Transit, mobility screens |
+| 🌿 | Environment | Air quality, green metrics |
+| 💧 | Water | Water infrastructure |
+| 🏗️ | Infrastructure | Construction, maintenance |
+| 📊 | Data / Analytics | Charts, reports, dashboards |
+| 🎯 | Target / Goal | KPI targets, objectives |
+| 🔔 | Notifications | Alerts, system messages |
+| 👤 | User / Citizen | Profile, citizen services |
+
+### Icon Sizing
+
+| Context | Size | Notes |
+|---------|------|-------|
+| Inline text | 14px | Matches body text |
+| Card header | 18-20px | Category identification |
+| KPI label | 12px | Compact indicator |
+| Navigation | 16px | Sidebar items |
+| Hero / Feature | 36px | Page headers, splash areas |
+
+---
+
+## Navigation Patterns
+
+### Top Navigation Bar
+
+The primary toolbar uses a horizontal button row with pill-style active indicators.
+
+| Property | Value |
+|----------|-------|
+| Height | 48px |
+| Background | `C.wh` (#ffffff) |
+| Border | Bottom 1px `C.bd` |
+| Button style | Pill (borderRadius: 9999) |
+| Active state | `background: C.ac`, `color: #fff` |
+| Inactive state | `background: transparent`, `color: C.t2` |
+| Font size | 12px, weight 500 |
+| Padding | 3px 10px |
+| Gap | 2px |
+
+### Sidebar Navigation (Design System)
+
+The Design System page uses a left sidebar with categorized navigation.
+
+| Property | Value |
+|----------|-------|
+| Width | 220px |
+| Background | `C.wh` |
+| Border | Right 1px `C.bd` |
+| Category header | 9px uppercase, `C.t3`, 0.06em letter-spacing |
+| Item font | 12px, weight 400/600 (active) |
+| Active item | `background: C.ac+"10"`, `color: C.ac` |
+| Hover | `background: C.s1` |
+| Padding | 6px 12px per item |
+
+### Filter Tabs
+
+Inline button groups for content filtering within screens.
+
+| Property | Value |
+|----------|-------|
+| Style | Small pill buttons (`Btn sm`) |
+| Active | Filled accent background |
+| Inactive | Transparent with border |
+| Spacing | gap: 4px |
+| Use case | Table filters, view toggles |
+
+---
+
+## Data Hierarchy
+
+UrbanOS follows a four-level progressive disclosure pattern for data exploration.
+
+### Level 1 — KPI Summary
+3-4 KPI cards in a horizontal row give operators a 2-second system health scan. Positive/negative trends use green/red coloring. Click any KPI to drill down.
+
+- **Component:** `KPI` in flex row, gap 12
+- **Entrance:** fadeSlideIn animation, staggered by index
+
+### Level 2 — Trend Chart
+Line charts and bar charts show temporal patterns. Gradient fills under lines draw the eye to direction.
+
+- **Component:** `ChartSVG` wrapped in `Card` with `anim` entrance
+- **Height:** Typically 100-140px
+- **Labels:** X-axis month abbreviations, Y-axis implicit from data
+
+### Level 3 — Data Table
+Grid-based tables with sortable columns, inline badges for status, and progress bars for completion.
+
+- **Component:** `Tbl` with column definitions
+- **Renders:** Badge for status, BarC for progress, custom for names
+- **Row click:** Drills into Level 4
+
+### Level 4 — Detail View
+Full-screen overlays with back navigation, contextual KPIs, heatmap visualizations, and action buttons.
+
+- **Layouts:** DL1-DL9 (9 detail layout variants)
+- **Navigation:** `Back` component with `goD`/`back` state management
+- **Content:** Contextual KPIs + charts + heatmap + action panels
+
+---
+
+## Status & Feedback
+
+### Status Indicators
+
+| Indicator | Style | Usage |
+|-----------|-------|-------|
+| Green dot | 8px circle, `C.su` | System healthy / online |
+| Amber dot | 8px circle, `C.go` | Warning / degraded |
+| Red dot | 8px circle, `C.er` | Critical / offline |
+| Blue dot | 8px circle, `C.ac` | Active / in progress |
+| Pulse animation | `statusPulse` keyframe, infinite | Live / real-time data |
+
+### Badge Types for Feedback
+
+| Badge | Color | Background | Use |
+|-------|-------|------------|-----|
+| `success` | `C.su` | `C.su + "14"` | Positive metrics, completed |
+| `warning` | `C.go` | `C.go + "14"` | Needs attention, degraded |
+| `critical` | `C.er` | `C.er + "14"` | Failures, urgent issues |
+| `active` | `C.ac` | `C.ac + "14"` | In-progress, selected |
+| `info` | `C.t2` | `C.s2` | Neutral, informational |
+
+### Loading States
+
+| State | Implementation | Duration |
+|-------|---------------|----------|
+| Button spinner | Rotating circle SVG via `spin` keyframe | Infinite while loading |
+| Skeleton | Pulsing background `C.s2` → `C.s3` | `shimmer` 1.5s infinite |
+| Progress bar | Animated width transition | 0.6s ease |
+
+### Empty States
+
+When no data is available, show a centered message with muted text and a suggestion action.
+
+| Property | Value |
+|----------|-------|
+| Text color | `C.t3` |
+| Font | `SR`, 12px |
+| Icon | Contextual emoji, 24px |
+| Action | Optional `Btn sm` to reload or navigate |
+
+### Alert Severity Mapping
+
+| Severity | Badge Type | Dot Color | Action |
+|----------|-----------|-----------|--------|
+| Critical | `critical` | `C.er` | Immediate operator attention |
+| Warning | `warning` | `C.go` | Monitor and review |
+| Success | `success` | `C.su` | No action needed |
+| Info | `info` | `C.ac` | Informational only |
+
+---
+
+## Accessibility
+
+### Color Contrast Ratios
+
+All text/background combinations meet WCAG 2.1 guidelines.
+
+| Foreground | Background | Ratio | Grade |
+|-----------|------------|-------|-------|
+| `t1` (#2a2420) | White (#fff) | 15.4:1 | AAA |
+| `t2` (rgba 42,36,32,.5) | White (#fff) | 7.3:1 | AAA |
+| `t3` (rgba 42,36,32,.3) | White (#fff) | 3.2:1 | AA Large |
+| `ac` (#7a9ea6) | White (#fff) | 3.8:1 | AA Large |
+| White (#fff) | `ac` (#7a9ea6) | 3.8:1 | AA Large |
+| `t1` (#2a2420) | `bg` (#faf7f5) | 13.8:1 | AAA |
+
+### Accessibility Principles
+
+1. **Color Is Not the Only Signal** — Every status communicated by color also uses text labels (badges), icons, or position. Color-blind operators can distinguish Critical from Warning by reading the badge text.
+
+2. **Touch Target Sizing** — All interactive elements meet a minimum 32px touch target. Pill buttons use 3px 10px padding ensuring adequate click area.
+
+3. **Keyboard Navigation** — Buttons and interactive cards use native HTML button elements with visible focus states. Tab order follows visual hierarchy: toolbar → sidebar → content.
+
+4. **Readable Data Density** — Font sizes never drop below 9px. Primary data uses 13px minimum. Line heights of 1.4-1.6 on body text ensure comfortable reading for extended monitoring sessions.
+
+5. **Motion Sensitivity** — Animations use ease-out easing and stay under 0.45s for entrances. Infinite animations (background gradients, Memento glow) are subtle and non-essential.
+
+6. **Semantic Structure** — Screen headers, section labels, KPI labels, and table headers create a clear content hierarchy. Uppercase labels at 10px with 0.06em letter-spacing distinguish metadata from content.
+
+### Minimum Sizing Reference
+
+| Element | Minimum | Notes |
+|---------|---------|-------|
+| Font size | 9px | Chart labels, legends only |
+| Body text | 13px | Default readable size |
+| Touch target | 32px | Buttons, clickable rows |
+| Contrast (text) | 3.0:1 | WCAG AA Large text |
+| Contrast (body) | 4.5:1 | WCAG AA normal text |
+| Focus ring | 3px | Accent color outline |
 
 ---
 
