@@ -1,6 +1,6 @@
-# UrbanOS NorthStar v2 — Design System
+# UrbanOS — Design System
 
-A comprehensive design system for UrbanOS, the operating system for cities. This document defines every visual token, component, animation, pattern, and guideline used across the prototype — covering 35 sections across 6 categories.
+A comprehensive design system for UrbanOS, the operating system for cities. This document defines every visual token, component, animation, pattern, and guideline used across the prototype — covering 37 sections across 6 categories.
 
 ---
 
@@ -345,6 +345,93 @@ Grid-based data table with sortable columns and clickable rows.
 - Header: 10px, 600 weight, uppercase, letterSpacing `.06em`, background `s1`
 - Row: fontSize 13, padding `10px 14px`, border-bottom
 - Container: border-radius 10, overflow hidden, 1px border
+
+---
+
+### Modal & Overlay
+
+Layered surfaces for tour tooltips, confirmations, and focused interactions.
+
+#### Tour Tooltip
+
+The guided onboarding tour uses positioned tooltip popovers that point to navigation tabs.
+
+| Property | Value |
+|----------|-------|
+| Position | Absolute, centered below target tab via `getBoundingClientRect()` |
+| Arrow | 12×12px rotated 45° div with matching border |
+| Shadow | `0 12px 40px rgba(0,0,0,.15)` (Level 3 overlay) |
+| Border Radius | 12px |
+| Padding | 16px 20px |
+| Entrance | `fadeScale .4s ease-out both` |
+| Step Counter | "Step N of 8" — fontSize 10, color `t3` |
+| Navigation | Skip (`Btn sm`) + Next → (`Btn sm primary`) |
+
+#### Overlay Scrim
+
+| Level | Background | Usage |
+|-------|------------|-------|
+| Light | `rgba(0,0,0,.4)` | Hover tooltips, subtle overlays |
+| Standard | `rgba(0,0,0,.6)` | Modal dialogs, confirmations |
+| Heavy | `rgba(0,0,0,.75)` | Tour system, focused tasks |
+
+#### Modal Specification
+
+| Property | Value |
+|----------|-------|
+| Border Radius | 16px |
+| Padding | 36px 40px |
+| Max Width | 420px |
+| Shadow | `0 20px 60px rgba(0,0,0,.3)` |
+| Entrance | `fadeScale .4s ease-out both` |
+| Z-index | 9999 (modals), 10000 (tour) |
+
+---
+
+### Detail Panel
+
+Full-screen overlay for deep-dive views. UrbanOS uses 15 detail layout variants (DL1–DL15) to handle different data shapes.
+
+#### Layout Variants
+
+| ID | Name | Description |
+|----|------|-------------|
+| DL1 | Standard Overview | KPIs + progress bar + heatmap |
+| DL2 | Profile / Entity | Avatar + info grid + trend chart |
+| DL3 | Analysis | 3-column KPIs + trend chart + heatmap |
+| DL4 | Hero Card | Centered gradient header + timeline + distribution |
+| DL5 | Split View | 2:1 layout — content left, stats right, actions |
+| DL6 | Map Focus | Full-width heatmap + 3-column KPI row |
+| DL7 | Workflow | Step indicators + timeline chart |
+| DL8 | Alert Detail | Severity badge header + description + location |
+| DL9 | Financial | 4-column KPIs + spending trend chart |
+| DL10 | Component | Centered icon card + specs + impact grid |
+| DL11 | AI Model | Accuracy metric + status badge + performance chart |
+| DL12 | District | Heatmap + demographics + quality bars |
+| DL13 | Scenario | Impact + target year + projected heatmap + KPIs |
+| DL14 | Environmental | Icon header + historical chart + impact heatmap |
+| DL15 | Feedback | Sentiment badge + community feedback + actions |
+
+#### Common Elements
+
+All detail panels include:
+- **Back button** — Top-left, uses `Back` component. fontSize 11, accent color, cursor pointer
+- **Title bar** — fontSize 20, fontWeight 600, letterSpacing `-0.3px`, color `t1`
+- **KPI row** — Horizontal flex with gap 12, typically 2-4 KPIs
+- **Content cards** — Animated `Card` wrappers (`anim: true`), mb 12, with 13px section title
+
+#### Navigation Pattern
+
+```
+// Push into detail view
+goD('district', { nm: 'Downtown Core', qi: 92, ... })
+
+// Return to list
+back()  // sets detail state to null
+
+// Layout selection (by screen context)
+detail && React.createElement(DL3, { data: detail.data, back: back, goD: goD })
+```
 
 ---
 
@@ -743,4 +830,4 @@ All text/background combinations meet WCAG 2.1 guidelines.
 
 ---
 
-*NorthStar v2 Design System — UrbanOS: The City's Quiet Intelligence*
+*UrbanOS Design System — The City's Quiet Intelligence*
