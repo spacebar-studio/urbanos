@@ -968,13 +968,14 @@ React.createElement("div",{style:{width:220,background:C.wh,borderRight:"1px sol
 React.createElement("div",{style:{padding:"10px 16px 16px",display:"flex",alignItems:"center",gap:8}},
 React.createElement(Logo,{size:20}),
 React.createElement("span",{style:{fontSize:14,fontWeight:600,color:C.t1,letterSpacing:"-0.2px"}},"Design System")),
-React.createElement("div",{onClick:function(){setSec("overview");},style:{padding:"8px 16px 8px 16px",fontSize:12,color:sec==="overview"?C.ac:C.t1,cursor:"pointer",fontWeight:sec==="overview"?600:500,background:sec==="overview"?C.ac+"08":"transparent",borderRight:sec==="overview"?"2px solid "+C.ac:"2px solid transparent",transition:"all .15s",marginBottom:4}},"Overview"),
+React.createElement("div",{style:{padding:"6px 16px",fontSize:10,fontWeight:600,color:C.t3,textTransform:"uppercase",letterSpacing:".06em"}},"Overview"),
+React.createElement("div",{onClick:function(){setSec("overview");},style:{padding:"6px 16px 6px 24px",fontSize:11,color:sec==="overview"?C.ac:C.t2,cursor:"pointer",fontWeight:sec==="overview"?600:400,background:sec==="overview"?C.ac+"08":"transparent",borderRight:sec==="overview"?"2px solid "+C.ac:"2px solid transparent",transition:"all .15s",marginBottom:4}},"Introduction"),
 cats.map(function(c){return React.createElement("div",{key:c.cat},
 React.createElement("div",{style:{padding:"6px 16px",fontSize:10,fontWeight:600,color:C.t3,textTransform:"uppercase",letterSpacing:".06em"}},c.cat),
 c.items.map(function(item){var isA=sec===item.id;return React.createElement("div",{key:item.id,onClick:function(){setSec(item.id);},style:{padding:"6px 16px 6px 24px",fontSize:11,color:isA?C.ac:C.t2,cursor:"pointer",fontWeight:isA?600:400,background:isA?C.ac+"08":"transparent",borderRight:isA?"2px solid "+C.ac:"2px solid transparent",transition:"all .15s"}},item.la);}));})),
 React.createElement("div",{style:{flex:1,overflow:"auto",background:C.bg}},
 React.createElement("div",{style:{padding:"20px 28px"}},
-React.createElement("div",{style:{fontSize:22,fontWeight:600,color:C.t1,letterSpacing:"-0.3px",marginBottom:4}},sec==="overview"?"Overview":cats.reduce(function(f,c){var m=c.items.find(function(i){return i.id===sec;});return m?m.la:f;},"Design Principles")),
+React.createElement("div",{style:{fontSize:22,fontWeight:600,color:C.t1,letterSpacing:"-0.3px",marginBottom:4}},sec==="overview"?"Introduction":cats.reduce(function(f,c){var m=c.items.find(function(i){return i.id===sec;});return m?m.la:f;},"Design Principles")),
 React.createElement("div",{style:{fontSize:11,color:C.t2,fontFamily:SR,marginBottom:20}},"UrbanOS Design System"),
 content)));}
 
